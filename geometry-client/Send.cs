@@ -28,15 +28,12 @@ class RPCClient {
                              consumer: consumer);
     }
 
-    public string Call(string message) {
+	public string Call(string testGeomString) {
         var corrId = Guid.NewGuid().ToString();
         var props = channel.CreateBasicProperties();
         props.ReplyTo = replyQueueName;
         props.CorrelationId = corrId;
 
-		//TODO test geometry demo
-	
-		String testGeomString = "{operator_name:\"Buffer\", left_wkt_geometries:[\"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\", \"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\"], wkid_sr:4326, input_booleans:[false], input_doubles:[2.0]}";
 		var messageBytes = Encoding.UTF8.GetBytes(testGeomString);
         channel.BasicPublish(exchange: "",
                              routingKey: "rpc_queue",
@@ -59,9 +56,10 @@ class RPCClient {
 class RPC {
     public static void Main() {
         var rpcClient = new RPCClient();
+		String testGeomString = "{operator_name:\"Buffer\", left_wkt_geometries:[\"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\", \"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\"], wkid_sr:4326, input_booleans:[false], input_doubles:[2.0]}";
+		Console.WriteLine("Requesting {0}", testGeomString);
 
-        Console.WriteLine(" [x] Requesting fib(5)");
-        var response = rpcClient.Call("5");
+		var response = rpcClient.Call(testGeomString);
         Console.WriteLine(" [.] Got '{0}'", response);
 
         rpcClient.Close();
