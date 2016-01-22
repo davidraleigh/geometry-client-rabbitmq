@@ -56,7 +56,7 @@ class RPCClient {
 class RPC {
     public static void Main() {
         var rpcClient = new RPCClient();
-
+		//github README example: String testGeomString = "{\\n\\t\\"operator_name\": \"Union\",\n\t\"left_wkt_geometries\": [\n\t\t\"MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 45 20, 30 5, 10 10, 10 30, 20 35), (30 20, 20 25, 20 15, 30 20)))\",\n\t\t\"POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))\",\n\t\t\"MULTIPOLYGON (((30 20, 45 40, 10 40, 30 20)),((15 5, 40 10, 10 20, 5 10, 15 5)))\"\n\t]\n}"
 		String testGeomString = "{operator_name:\"Buffer\", left_wkt_geometries:[\"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\", \"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\"], wkid_sr:4326, input_booleans:[false], input_doubles:[2.0]}";
 		Console.WriteLine("Requesting {0}", testGeomString);
 
