@@ -56,6 +56,7 @@ class RPCClient {
 class RPC {
     public static void Main() {
         var rpcClient = new RPCClient();
+
 		String testGeomString = "{operator_name:\"Buffer\", left_wkt_geometries:[\"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\", \"POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2, 3 2, 3 3, 2 3,2 2))\"], wkid_sr:4326, input_booleans:[false], input_doubles:[2.0]}";
 		Console.WriteLine("Requesting {0}", testGeomString);
 
