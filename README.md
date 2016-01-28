@@ -1,8 +1,11 @@
 # geometry-client-rabbitmq
+
+###Overview of geometry-api-cs project demonstration
 A demonstration of how one could write a client that will interact with the rabbitmq [geometry-worker](http://github.com/davidraleigh/geometry-worker) that powers http://geometry.fogmodel.io.
 
 On line 60 of the test app there is a `testGeomString` variable. If you go to http://geometry.fogmodel.io you can get a sample of different types of operators and the message format for sending requests to the worker. For instance if you click the `Show JSON` button on the webpage you can then copy the `JSON Request` field and place it into your application
 
+###Client Message Structure:
 Appearance of JSON Request on page http://geometry.fogmodel.io after clicking Show JSON:
 ```javascript
 {
@@ -22,6 +25,7 @@ Clipboard version that can be copied into the geometry-client `Send.cs` file at 
 
 The response returned by the geometry-client-rabbitmq application will match the `JSON Results` field on the http://geometry.fogmodel.io page (remember to click `Show JSON` to demonstrate JSON messages).
 
+### geometry-api-cs coding style:
 For an estimate of how one would use the geometry-api-cs to perform a union operation the below code shows how the GeometryCursors work:
 ```c#
 public List<String> UnionTest(String[] leftWKTs, int wkid) {
