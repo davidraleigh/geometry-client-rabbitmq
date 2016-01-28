@@ -21,3 +21,43 @@ Clipboard version that can be copied into the geometry-client `Send.cs` file at 
 ```
 
 The response returned by the geometry-client-rabbitmq application will match the `JSON Results` field on the http://geometry.fogmodel.io page (remember to click `Show JSON` to demonstrate JSON messages).
+
+For an estimate of how one would use the geometry-api-cs to perform a union operation the below code shows how the GeometryCursors work:
+```c#
+public List<String> UnionTest(String[] leftWKTs, int wkid) {
+	SpatialReference spatialReference = new SpatialReference(wkid);
+
+	List<Geometry> m_leftGeometries = new List<Geometry>();
+	foreach (String wkt in leftWKT)
+		m_leftGeometries.Add(GeometryEngine.GeometryFromWkt(wkt, 0, Geometry.Type.Unknown));
+
+	GeometryCursor geometryCursor = new SimpleGeometryCursor(m_leftGeometries);
+	GeometryCursor unionGeometryCursor = OperatorUnion.Local().Execute(geometryCursor, m_spatialReference, null);
+
+	Geometry geom = null;
+	List<String> wktArray = new List<String>();
+
+	while ((geom = unionGeometryCursor.Next()) != null)
+		wktArray.Add(GeometryEngine.GeometryToWkt(geom, 0));
+
+	return wktArray;
+}
+```
+
+With a little more development in geometry-api-cs there could be a single line geometryCurosr creation from an array of WKTs:
+```c#
+public List<String> UnionTest(String[] leftWKTs, int wkid) {
+	SpatialReference spatialReference = new SpatialReference(wkid);
+
+	GeometryCursor geometryCursor = GeometryEngine.GeometryCursorFromWkt(leftWKTs, 0, Geometry.Type.Unknown);
+	GeometryCursor unionGeometryCursor = OperatorUnion.Local().Execute(geometryCursor, m_spatialReference, null);
+
+	Geometry geom = null;
+	List<String> wktArray = new List<String>();
+
+	while ((geom = unionGeometryCursor.Next()) != null)
+		wktArray.Add(GeometryEngine.GeometryToWkt(geom, 0));
+
+	return wktArray;
+}
+```
